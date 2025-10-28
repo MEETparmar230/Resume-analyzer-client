@@ -15,6 +15,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [jobRoles, setJobRoles] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const api = import.meta.env.VITE_API_URL!;
 
 
   // 🧠 Fetch job titles from Supabase
@@ -61,9 +62,11 @@ if (!jobRole && !jobDescription) {
   formData.append("job_role", jobRole);
   formData.append("job_description", jobDescription);
 
+ 
+
   setLoading(true);
   try {
-    const res = await fetch("http://localhost:8081/api/analyze", {
+    const res = await fetch(`${api}`, {
       method: "POST",
       body: formData,
     });
