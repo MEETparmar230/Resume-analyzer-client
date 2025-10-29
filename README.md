@@ -22,14 +22,14 @@ It allows users to upload resumes and view analyzed results returned by the back
 
 ```bash
 # 1️⃣ Clone the repository
-git clone https://github.com/<your-username>/resume-analyser.git
+git clone https://https://github.com/MEETparmar230/Resume-analyzer-client
 cd client
 
 # 2️⃣ Install dependencies
 npm install
 
 # 3️⃣ Create .env file
-echo "VITE_API_BASE_URL=http://localhost:8081" > .env
+echo "VITE_API_BASE_URL=http://localhost:8081"
 
 # 4️⃣ Run the app
 npm run dev
