@@ -66,7 +66,7 @@ if (!jobRole && !jobDescription) {
 
   setLoading(true);
   try {
-    const res = await fetch(`${api}`, {
+    const res = await fetch(`${api}/api/analyze`, {
       method: "POST",
       body: formData,
     });
