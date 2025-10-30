@@ -1,12 +1,31 @@
 # 🎨 Resume Analyser - Frontend (React)
 
-This is the **frontend** of the Resume Analyser App, built using **React + TypeScript + Vite**.  
-It allows users to upload resumes and view analyzed results returned by the backend.
+Resume Analyser is an intelligent web application that automates resume evaluation using modern full-stack architecture and NLP.
+Users can upload resumes through a sleek React + TypeScript interface, where the file is processed via a Spring Boot backend.
+The backend communicates with a Python FastAPI microservice that performs natural language processing on the text to extract:
+
+- Key skills and technologies
+
+- Experience summary
+
+- Profile strengths and improvement suggestions
+
+The results are then sent back to the frontend for display in a clean, responsive UI.
+The system is designed with modular microservices for scalability and cloud deployment.
 
 ---
 
 ## 🌐 Deployment
-- **Vercel:** [https://resume-analyzer-blush-nine.vercel.app/](https://resume-analyzer-blush-nine.vercel.app/)
+- **Vercel:** [Frontend (react)](https://resume-analyzer-blush-nine.vercel.app/)
+- **Render:** [Backend (Java)](https://resume-analyser-server-0h7e.onrender.com/api/)  [Docker (Image)](https://hub.docker.com/repository/docker/mithparmar/resume-analyser-server/)
+- **huggingface:** [AI Microservice (Python FastAPI)](https://mith010-resume-analyzer-fastapi.hf.space/)
+
+---
+
+## 🌐 Github
+- **Frontend:** [Resume-analyzer-client](https://github.com/MEETparmar230/Resume-analyzer-client)
+- **Backend (Java):** [Resume-analyzer-Server](https://github.com/MEETparmar230/Resume-analyzer-Server)
+- **AI Microservice (Python FastAPI):** [resume-analyzer-microservice](https://github.com/MEETparmar230/resume-analyzer-microservice)
 
 ---
 
