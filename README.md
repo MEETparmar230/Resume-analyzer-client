@@ -17,7 +17,8 @@ The system is designed with modular microservices for scalability and cloud depl
 
 ## 🌐 Deployment
 - **Vercel:** [Frontend (react)](https://resume-analyzer-blush-nine.vercel.app/)
-- **Render:** [Backend (Java)](https://resume-analyser-server-0h7e.onrender.com/api/)  [Docker (Image)](https://hub.docker.com/repository/docker/mithparmar/resume-analyser-server/)
+- **Render:** [Backend (Java)](https://resume-analyser-server-0h7e.onrender.com/api/) 
+- **Docker (Image)** [Backend (Java)](https://hub.docker.com/repository/docker/mithparmar/resume-analyser-server/)
 - **huggingface:** [AI Microservice (Python FastAPI)](https://mith010-resume-analyzer-fastapi.hf.space/)
 
 ---
