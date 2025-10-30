@@ -16,7 +16,7 @@ export default function Footer() {
             <li>📤 Sends form data to Java backend:</li>
             <li className="break-all text-fuchsia-200">
               <a
-                href="https://resume-analyser-server-0h7e.onrender.com"
+                href="https://resume-analyser-server-0h7e.onrender.com/api/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-fuchsia-300 transition-colors"
@@ -41,12 +41,12 @@ export default function Footer() {
             <li>📦 Sends JSON data to Python microservice:</li>
             <li className="break-all text-fuchsia-200">
               <a
-                href="https://mith010-resume-analyzer-fastapi.hf.space/analyze"
+                href="https://mith010-resume-analyzer-fastapi.hf.space/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-fuchsia-300 transition-colors"
               >
-                https://mith010-resume-analyzer-fastapi.hf.space/analyze
+                https://mith010-resume-analyzer-fastapi.hf.space/
               </a>
             </li>
           </ul>
@@ -67,7 +67,7 @@ export default function Footer() {
             <li>📨 Sends analysis results back to:</li>
             <li className="break-all text-fuchsia-200">
               <a
-                href="https://resume-analyser-server-0h7e.onrender.com"
+                href="https://resume-analyser-server-0h7e.onrender.com/api/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-fuchsia-300 transition-colors"
