@@ -7,7 +7,6 @@ import Select from "react-select";
 import type { SingleValue } from "react-select";
 import Footer from "./components/Footer";
 
-
 function App() {
   const [file, setFile] = useState<File | null>(null);
   const [jobRole, setJobRole] = useState("");
@@ -17,25 +16,58 @@ function App() {
   const [jobRoles, setJobRoles] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const api = import.meta.env.VITE_API_URL!;
+  const [backendStatus, setBackendStatus] = useState<
+    "checking" | "awake" | "sleeping"
+  >("checking");
+  const [jobsLoading, setJobsLoading] = useState(true);
+  const [supabasePaused, setSupabasePaused] = useState(false);
 
-
-  // 🧠 Fetch job titles from Supabase
+  //check Backend status
   useEffect(() => {
-    const fetchJobRoles = async () => {
-      const { data, error } = await supabase
-        .from("jobs")
-        .select("title");
+    const checkBackend = async () => {
+      try {
+        const res = await fetch(`${api}/api`, {
+          method: "GET",
+          cache: "no-store",
+        });
 
-      if (error) {
-        console.error("Error fetching job roles:", error);
-      } else if (data) {
-        const titles = data.map((item) => item.title);
-        setJobRoles(titles);
+        if (res.status < 500) {
+          setBackendStatus("awake");
+        } else {
+          setBackendStatus("sleeping");
+        }
+      } catch {
+        setBackendStatus("sleeping");
       }
     };
 
-    fetchJobRoles();
-  }, []);
+    checkBackend();
+  }, [api]);
+
+  // 🧠 Fetch job titles from Supabase
+useEffect(() => {
+  const fetchJobRoles = async () => {
+    setJobsLoading(true);
+    setSupabasePaused(false);
+
+    const { data, error } = await supabase
+      .from("jobs")
+      .select("title");
+
+    if (error) {
+      console.error("Supabase error:", error);
+      setSupabasePaused(true);
+      setJobRoles([]);
+    } else {
+      setJobRoles(data?.map((item) => item.title) ?? []);
+    }
+
+    setJobsLoading(false);
+  };
+
+  fetchJobRoles();
+}, []);
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -57,13 +89,10 @@ function App() {
       return; // ⬅️ add this line
     }
 
-
     const formData = new FormData();
     formData.append("file", file);
     formData.append("job_role", jobRole);
     formData.append("job_description", jobDescription);
-
-
 
     setLoading(true);
     try {
@@ -91,16 +120,28 @@ function App() {
     }
   }, [error]);
 
+
+  
+
   return (
     <div className="min-h-screen bg-fuchsia-800 text-white flex flex-col">
       <Navbar />
 
-      <div className="flex flex-col items-center justify-center mt-10 px-4 py-2 flex-grow">
+      
+      {(backendStatus !== "awake") ? <div className="flex-grow ">
+      <div className="bg-fuchsia-700 text-yellow-300 text-center py-2 text-sm w-fit mx-auto px-5 rounded-2xl mt-5">
+        ⏳ Server is waking up… please retry after 20–30 seconds
+      </div>
+      </div>
+      :
+        <div className="flex flex-col items-center justify-center mt-10 px-4 py-2 flex-grow">
         <form
           onSubmit={handleSubmit}
           className="bg-fuchsia-700 p-6 rounded-2xl shadow-xl w-full max-w-md"
         >
-          <h2 className="text-2xl font-semibold mb-4 text-center">Upload Resume</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-center">
+            Upload Resume
+          </h2>
 
           <input
             type="file"
@@ -109,12 +150,18 @@ function App() {
             className="block w-full mb-3 bg-fuchsia-600 p-2 rounded"
           />
 
+          { !jobsLoading && supabasePaused && (
+            <div className="mb-3 bg-red-600 text-white text-sm p-2 rounded text-center animate-pulse">
+              ⚠️ Supabase database is paused. Please contact admin.
+            </div>
+          )}
           {/* 🧩 Job Role Dropdown */}
           <Select
+            isDisabled={supabasePaused}
             options={jobRoles.map((role) => ({ value: role, label: role }))}
-            onChange={(selected: SingleValue<{ value: string; label: string }>) =>
-              setJobRole(selected?.value || "")
-            }
+            onChange={(
+              selected: SingleValue<{ value: string; label: string }>,
+            ) => setJobRole(selected?.value || "")}
             placeholder="Select or type job role"
             className="w-full mb-3"
             styles={{
@@ -157,15 +204,12 @@ function App() {
               colors: {
                 ...theme.colors,
                 primary25: "#c026d3", // hover option
-                primary: "#a21caf",   // selected option
+                primary: "#a21caf", // selected option
               },
             })}
             isClearable
             isSearchable
           />
-
-
-
 
           <textarea
             placeholder="Job Description (comma separated skills)"
@@ -188,12 +232,11 @@ function App() {
               {error}
             </p>
           )}
-
         </form>
 
         {result && <ResultCard result={result} />}
-      </div>
-      <Footer/>
+      </div>}
+      <Footer />
     </div>
   );
 }
